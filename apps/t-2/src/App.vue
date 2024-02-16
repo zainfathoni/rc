@@ -1,5 +1,6 @@
 <script setup>
-import HelloWorld from "./components/HelloWorld.vue";
+import HelloWorld from "./routes/hello/index.vue";
+import Settings from "./routes/settings/index.vue";
 </script>
 
 <template>
@@ -12,6 +13,7 @@ import HelloWorld from "./components/HelloWorld.vue";
     </a>
   </div>
   <HelloWorld msg="Task #2" />
+  <Settings />
 </template>
 
 <style scoped>

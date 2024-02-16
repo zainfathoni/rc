@@ -1,15 +1,19 @@
 <script setup>
-import { ref } from 'vue'
+import { ref } from 'vue';
+import { formatDate } from '../../shared/DateUtils.js';
 
 defineProps({
   msg: String,
 })
 
 const count = ref(0)
+
+const today = formatDate(new Date(), 'en-SG')
 </script>
 
 <template>
   <h1>{{ msg }}</h1>
+  <p>Today (in Singapore format) is {{ today }}</p>
 
   <div class="card">
     <button type="button" @click="count++">count is {{ count }}</button>
