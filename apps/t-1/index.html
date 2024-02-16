@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Task #1</title>
+  </head>
+  <body>
+    <main id="app">
+      <h1>Search Products</h1>
+      <input id="search" type="text" onkeypress="onSearch()" />
+    </main>
+    <script type="module">
+      import "./style.css";
+    </script>
+    <script>
+      const inputField = document.getElementById("search");
+
+      let controller;
+
+      function onSearch() {
+        controller?.abort();
+
+        const search = inputField.value;
+        const url = "https://dummyjson.com/products/search?q=" + search;
+
+        controller = new AbortController();
+        const { signal } = controller;
+
+        fetch(url, { signal })
+          .then((response) => response.json())
+          .then(displaySearchResults)
+          .catch((error) => {
+            if (error.name === "AbortError") {
+              console.log("Fetch aborted");
+            } else {
+              console.error("Error during fetch:", error.message);
+            }
+          });
+      }
+
+      function displaySearchResults(data) {
+        console.log(data);
+      }
+    </script>
+  </body>
+</html>
