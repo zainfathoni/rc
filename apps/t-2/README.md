@@ -26,6 +26,17 @@
   File Component of the route that uses them. This makes it easier to find the
   styles that are used by a specific route.
 
+### Additional Tools
+
+- With this structure, code ownership is easily contained by directories. We can
+  employ tools like
+  [eslint-plugin-import](https://www.npmjs.com/package/eslint-plugin-import) to
+  enforce that the modules are only imported from the correct directory. This
+  can help prevent accidental cross-imports and make it easier to find the code
+  that is used by a specific route.
+- It also allows us to use tools like CODEOWNERS to enforce that the code can
+  only be changed by the approval of the owner of the directory.
+
 ## Illustration
 
 | Before                                | After                                                                                                  |
@@ -42,7 +53,7 @@
 
 ## References
 
-- This pattern is adopted by the
+- This pattern is adopted from the
   [scaling recommendation](https://remix.run/docs/en/main/file-conventions/routes#scaling)
   from Remix
 - Vue's
