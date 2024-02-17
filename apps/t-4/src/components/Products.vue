@@ -4,7 +4,7 @@
     <div v-if="loading">Loading...</div>
     <div v-else-if="!errorMessage">
       <ol>
-        <li v-for="item in backendData.slice(0, itemsToShow)" :key="item.id">
+        <li v-for="item in backendData.slice(0, props.itemsToShow)" :key="item.id">
           {{ item.title }} - ${{ item.price }}
         </li>
       </ol>
@@ -15,42 +15,35 @@
   </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
+import { onMounted, ref } from 'vue';
+
 interface Product {
   id: number;
   title: string;
   price: number;
 }
 
-export default {
-  props: {
-    itemsToShow: {
-      type: Number,
-      default: 5,
-    },
-  },
-  data(): { loading: boolean; backendData: Product[], errorMessage?: string } {
-    return {
-      loading: false,
-      backendData: [],
-      errorMessage: undefined,
-    };
-  },
-  mounted() {
-    this.loading = true;
-    fetch("https://dummyjson.com/products/")
-      .then((response) => response.json())
-      .then((data) => {
-        this.backendData = data.products;
-        this.loading = false;
-      })
-      .catch((error: Error) => {
-        console.error('Error:', error);
-        this.loading = false;
-        this.errorMessage = error.message;
-      });
-  },
-};
+const props = defineProps({ itemsToShow: { type: Number, default: 5 } });
+
+const loading = ref(false);
+const backendData = ref<Product[]>([]);
+const errorMessage = ref<string>();
+
+onMounted(() => {
+  loading.value = true;
+  fetch("https://dummyjson.com/products/")
+    .then((response) => response.json())
+    .then((data) => {
+      backendData.value = data.products;
+      loading.value = false;
+    })
+    .catch((error: Error) => {
+      console.error('Error:', error);
+      loading.value = false;
+      errorMessage.value = error.message;
+    });
+})
 </script>
 
 <style scoped>
