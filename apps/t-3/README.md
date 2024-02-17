@@ -13,3 +13,13 @@ formatLastPurchasedAt(29184); //=> null
 formatLastPurchasedAt(38009); //=> 11/14/2023, 6:51:49 AM
 formatLastPurchasedAt(40821); //=> 1/29/2024, 11:21:56 PM
 ```
+
+### Additional capabilities of `convertGrossSalesToCurrency`
+
+1. **Convert to non-USD currency**: The function `convertGrossSalesToCurrency`
+   should be able to convert the gross sales to any currency by passing the
+   expected currency as the 4th argument.
+2. Returns null if the corresponding gross sales is not found in the product
+   data.
+3. Returns an error message if the conversion rate is not found in the
+   conversion rates data.

@@ -73,8 +73,12 @@ export function convertGrossSalesToCurrency(
           dstCurrencyCode === currency && srcCurrencyCode === expectedCurrency,
       );
       if (!invertedConversionRate) {
+        const formattedOriginalAmount = new Intl.NumberFormat("en-US", {
+          style: "currency",
+          currency,
+        }).format(amount);
         throw new Error(
-          `Conversion rate not found for ${currency} to ${expectedCurrency}`,
+          `Unable to convert ${formattedOriginalAmount} to ${expectedCurrency}.`,
         );
       }
       rate = 1 / invertedConversionRate[2];
