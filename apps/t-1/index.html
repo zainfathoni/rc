@@ -3,19 +3,19 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="stylesheet" href="/style.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Task #1</title>
   </head>
   <body>
     <main id="app">
       <h1>Search Products</h1>
-      <input id="search" type="text" onkeypress="onSearch()" />
+      <input id="search" type="text" />
+      <ol id="results"></ol>
     </main>
-    <script type="module">
-      import "./style.css";
-    </script>
     <script>
       const inputField = document.getElementById("search");
+      inputField.addEventListener("input", onSearch);
 
       let controller;
 
@@ -23,6 +23,12 @@
         controller?.abort();
 
         const search = inputField.value;
+
+        if (!search) {
+          displaySearchResults({ products: [] });
+          return;
+        }
+
         const url = "https://dummyjson.com/products/search?q=" + search;
 
         controller = new AbortController();
@@ -41,7 +47,22 @@
       }
 
       function displaySearchResults(data) {
-        console.log(data);
+        const resultsElement = document.querySelector("#results");
+        if (!resultsElement) return;
+
+        if (!data?.products?.length) {
+          resultsElement.innerHTML = "<li>No results found</li>";
+          return;
+        }
+
+        resultsElement.innerHTML = data?.products
+          ?.map(
+            (item) => `
+          <li>${item.title} - $${item.price}
+          </li>
+        `,
+          )
+          .join("");
       }
     </script>
   </body>
