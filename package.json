@@ -1,5 +1,5 @@
 {
-  "name": "relaycommerce-assignment",
+  "name": "rc",
   "private": true,
   "scripts": {
     "build": "turbo build",
